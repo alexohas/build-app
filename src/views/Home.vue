@@ -27,7 +27,11 @@
 					</div>
 					<div>
 						<p>Price: £{{ lesson.price }}</p>
-						<button class="btn btn-primary" @click="addCart(lesson.id, i)">
+						<button
+							:disabled="lesson.space === 0"
+							class="btn btn-primary"
+							@click="addCart(lesson.id, i)"
+						>
 							Add to cart
 						</button>
 					</div>

@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div class="text-center">
+		<div class="text-left px-5 py-2">
 			<button class="btn btn-info" @click="reset">Reset System</button>
 		</div>
 		<router-view />
@@ -18,16 +18,14 @@ export default {
 	methods: {
 		...mapMutations(['addLesson', 'clearLessons']),
 		loadLessons() {
-			if (this.lessons.length === 0) {
-				let lessons = this.$lessons(30)
-				let id = 1
-				for (let lesson of lessons) {
-					if (lesson) {
-						lesson.id = id
-						this.addLesson(lesson)
-					}
-					id++
+			let lessons = this.$lessons(20)
+			let id = 1
+			for (let lesson of lessons) {
+				if (lesson) {
+					lesson.id = id
+					this.addLesson(lesson)
 				}
+				id++
 			}
 		},
 		reset() {
