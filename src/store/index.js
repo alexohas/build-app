@@ -1,12 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import PS from 'vuex-persistedstate'
+import PS from "vuex-persistedstate";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},
-    modules: {},
+  modules: {},
   plugins: [PS()]
 });

@@ -3,6 +3,9 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import { lessons } from "./lessons";
+
+Vue.prototype.$lessons = lessons;
 
 Vue.config.productionTip = false;
 
