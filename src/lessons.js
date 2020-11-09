@@ -9,8 +9,8 @@ export const lessons = function (size) {
         less[index] = {
             lesson: randomWords({ exactly: 2, join: " " }),
             location: locations[index],
-            price: index * 10,
-            space: index * 20,
+            price: index>10?index * 2: index*3,
+            space: 5,
             image: "https://picsum.photos/200/300"
        }
     }
