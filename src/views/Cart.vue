@@ -52,7 +52,9 @@
 								/>
 							</p>
 							<p>Total Price: £{{ item.total }}</p>
-							<button class="btn btn-warning">Remove</button>
+							<button @click="removeItem(i, item)" class="btn btn-warning">
+								Remove
+							</button>
 						</div>
 					</div>
 				</div>
@@ -165,13 +167,11 @@ export default {
 			let old =
 				this.cart[i].total /
 				this.lessons.find((e) => e.id === item.lesson).price
-			this.cart[i].total =
-				this.cart[i].quantity *
-				this.lessons.find((e) => e.id === item.lesson).price
-			if (this.cart[i].quantity > old) {
-				this.lessons.find((e) => e.id === item.lesson).space--
-			} else {
-				this.lessons.find((e) => e.id === item.lesson).space++
+			this.lessons.find((e) => e.id === item.lesson).space++
+
+			this.cart.splice(i, 1)
+			if (this.cart.length === 0) {
+				this.$router.push('/')
 			}
 		},
 		viewCart() {
