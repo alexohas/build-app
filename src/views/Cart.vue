@@ -161,6 +161,19 @@ export default {
 				this.lessons.find((e) => e.id === item.lesson).space++
 			}
 		},
+		removeItem(i, item) {
+			let old =
+				this.cart[i].total /
+				this.lessons.find((e) => e.id === item.lesson).price
+			this.cart[i].total =
+				this.cart[i].quantity *
+				this.lessons.find((e) => e.id === item.lesson).price
+			if (this.cart[i].quantity > old) {
+				this.lessons.find((e) => e.id === item.lesson).space--
+			} else {
+				this.lessons.find((e) => e.id === item.lesson).space++
+			}
+		},
 		viewCart() {
 			this.$router.push('/cart')
 		}
