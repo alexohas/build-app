@@ -31,6 +31,7 @@ export default {
 		reset() {
 			this.clearLessons()
 			this.loadLessons()
+			this.$router.push('/')
 		}
 	}
 }

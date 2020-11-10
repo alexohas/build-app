@@ -159,6 +159,7 @@ export default {
 			let current = this.lessons[index]
 			if (exist !== -1) {
 				this.cart[exist].quantity++
+				this.cart[exist].total = this.cart[exist].total + current.price
 			} else {
 				let item = {
 					lesson,
