@@ -18,7 +18,7 @@ export default {
 	methods: {
 		...mapMutations(['addLesson', 'clearLessons']),
 		loadLessons() {
-			let lessons = this.$lessons(20)
+			let lessons = this.$lessons(5)
 			let id = 1
 			for (let lesson of lessons) {
 				if (lesson) {

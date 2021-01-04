@@ -143,7 +143,7 @@ export default {
 		...mapMutations(['addLesson', 'clearLessons', 'addToCart']),
 		loadLessons() {
 			if (this.lessons.length === 0) {
-				let lessons = this.$lessons(30)
+				let lessons = this.$lessons(3)
 				let id = 1
 				for (let lesson of lessons) {
 					if (lesson) {
