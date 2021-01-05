@@ -59,7 +59,7 @@
 						<button
 							:disabled="lesson.space === 0"
 							class="btn btn-primary"
-							@click="addCart(lesson.id, i)"
+							@click="addCart(lesson._id, i)"
 						>
 							Add to cart
 						</button>
@@ -73,6 +73,7 @@
 <script>
 /* eslint-disable */
 import {mapMutations, mapGetters} from 'vuex'
+import {lessons} from '../apis/lessons.js'
 export default {
 	name: 'Home',
 	components: {},
@@ -141,17 +142,15 @@ export default {
 	},
 	methods: {
 		...mapMutations(['addLesson', 'clearLessons', 'addToCart']),
-		loadLessons() {
-			if (this.lessons.length === 0) {
-				let lessons = this.$lessons(3)
-				let id = 1
-				for (let lesson of lessons) {
-					if (lesson) {
-						lesson.id = id
-						this.addLesson(lesson)
-					}
-					id++
+		loadLessons: async function() {
+			try {
+				let result = await lessons()
+				this.clearLessons()
+				for (let lesson of result.lessons) {
+					this.addLesson(lesson)
 				}
+			} catch (error) {
+				console.log(error.message)
 			}
 		},
 		addCart(lesson, index) {

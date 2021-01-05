@@ -2,6 +2,9 @@
 	<div id="app">
 		<div class="text-left px-5 py-2">
 			<button class="btn btn-info" @click="reset">Reset System</button>
+			<a class="btn btn-danger ml-3" @click.prevent="$router.push('/orders')"
+				>View Orders</a
+			>
 		</div>
 		<router-view />
 	</div>
@@ -10,6 +13,7 @@
 <script>
 /* eslint-disable */
 import {mapMutations, mapGetters} from 'vuex'
+import {lessons} from './apis/lessons.js'
 export default {
 	name: 'Home',
 	components: {},
@@ -17,19 +21,18 @@ export default {
 
 	methods: {
 		...mapMutations(['addLesson', 'clearLessons']),
-		loadLessons() {
-			let lessons = this.$lessons(5)
-			let id = 1
-			for (let lesson of lessons) {
-				if (lesson) {
-					lesson.id = id
+		loadLessons: async function() {
+			try {
+				let result = await lessons()
+				this.clearLessons()
+				for (let lesson of result.lessons) {
 					this.addLesson(lesson)
 				}
-				id++
+			} catch (error) {
+				console.log(error.message)
 			}
 		},
 		reset() {
-			this.clearLessons()
 			this.loadLessons()
 			this.$router.push('/')
 		}

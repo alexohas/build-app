@@ -15,7 +15,7 @@
 						<div class="d-flex justify-content-start align-items-center">
 							<div class="mr-3">
 								<img
-									:src="lessons.find((e) => e.id === item.lesson).image"
+									:src="lessons.find((e) => e._id === item.lesson).image"
 									style="height: 100px; width: 100px; border-radius: 10px"
 									alt=""
 								/>
@@ -23,15 +23,15 @@
 							<div class="pt-2 text-capitalize">
 								<p>
 									Subject:
-									{{ lessons.find((e) => e.id === item.lesson).lesson }}
+									{{ lessons.find((e) => e._id === item.lesson).lesson }}
 								</p>
 								<p>
 									Location:
-									{{ lessons.find((e) => e.id === item.lesson).location }}
+									{{ lessons.find((e) => e._id === item.lesson).location }}
 								</p>
 								<p>
 									Unit Price: £{{
-										lessons.find((e) => e.id === item.lesson).price
+										lessons.find((e) => e._id === item.lesson).price
 									}}
 								</p>
 							</div>
@@ -42,7 +42,7 @@
 									:id="item.lesson"
 									min="1"
 									:max="
-										lessons.find((e) => e.id === item.lesson).space +
+										lessons.find((e) => e._id === item.lesson).space +
 											cart[i].quantity
 									"
 									@change="(e) => changeQty(i, item, e)"
@@ -89,6 +89,7 @@
 
 						<div class="form-group">
 							<button
+								type="button"
 								@click="checkoutBtn"
 								class="btn btn-primary"
 								v-if="validatePhone && validateName"
@@ -106,6 +107,7 @@
 <script>
 /* eslint-disable */
 import {mapMutations, mapGetters} from 'vuex'
+import {place_order} from '../apis/lessons.js'
 export default {
 	name: 'Home',
 	components: {},
@@ -147,27 +149,39 @@ export default {
 	},
 	methods: {
 		...mapMutations(['addToCart', 'clearLessons']),
-		checkoutBtn() {
-			this.$router.push('/confirmation')
+		checkoutBtn: async function() {
+			try {
+				let result = await place_order(
+					JSON.stringify({
+						contents: this.cart,
+						user: this.user,
+						total: this.computeTotal
+					})
+				)
+
+				this.$router.push('/confirmation')
+			} catch (error) {
+				console.log(error.message)
+			}
 		},
 		changeQty(i, item) {
 			let old =
 				this.cart[i].total /
-				this.lessons.find((e) => e.id === item.lesson).price
+				this.lessons.find((e) => e._id === item.lesson).price
 			this.cart[i].total =
 				this.cart[i].quantity *
-				this.lessons.find((e) => e.id === item.lesson).price
+				this.lessons.find((e) => e._id === item.lesson).price
 			if (this.cart[i].quantity > old) {
-				this.lessons.find((e) => e.id === item.lesson).space--
+				this.lessons.find((e) => e._id === item.lesson).space--
 			} else {
-				this.lessons.find((e) => e.id === item.lesson).space++
+				this.lessons.find((e) => e._id === item.lesson).space++
 			}
 		},
 		removeItem(i, item) {
 			let old =
 				this.cart[i].total /
-				this.lessons.find((e) => e.id === item.lesson).price
-			this.lessons.find((e) => e.id === item.lesson).space++
+				this.lessons.find((e) => e._id === item.lesson).price
+			this.lessons.find((e) => e._id === item.lesson).space++
 
 			this.cart.splice(i, 1)
 			if (this.cart.length === 0) {
