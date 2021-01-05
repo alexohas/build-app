@@ -1,13 +1,13 @@
 
 
 export const lessons = async function () {
-    return fetch('http://localhost:1002/lessons')
+    return fetch('https://hidden-brushlands-77814.herokuapp.com/lessons')
         .then(response => response.json())
         .then(data => data);
 }
 
 export const place_order = async function (args) {
-    return fetch('http://localhost:1002/orders', {
+    return fetch('https://hidden-brushlands-77814.herokuapp.com/orders', {
         method: 'post', body: args, headers: {
         'Content-Type': 'application/json'
     }})
@@ -16,7 +16,7 @@ export const place_order = async function (args) {
 }
 
 export const fetch_orders = async function (args) {
-    return fetch('http://localhost:1002/fetch-orders', {
+    return fetch('https://hidden-brushlands-77814.herokuapp.com/fetch-orders', {
         method: 'post', body: args, headers: {
         'Content-Type': 'application/json'
     }})
