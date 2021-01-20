@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.c5bcabdbae17bea794d55b87bdca8083.js"
+  "/precache-manifest.e945add7551ad5c028f228698bd0cfe1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "after-school-classes"});
